@@ -1,4 +1,4 @@
-package com.heima.ymhaicodermother.model.dto;
+package com.heima.ymhaicodermother.model.dto.user;
 
 import lombok.Data;
 
