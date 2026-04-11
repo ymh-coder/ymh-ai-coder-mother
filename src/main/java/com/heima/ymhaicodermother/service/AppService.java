@@ -21,14 +21,18 @@ public interface AppService extends IService<App> {
 
     /**
      * 应用部署
-     * @param appId 应用 ID
+     *
+     * @param appId     应用 ID
      * @param loginUser 登录用户
      * @return 可访问的部署地址
      */
-    String deployApp(Long appId,User loginUser);
+    String deployApp(Long appId, User loginUser);
+
+    void generateAppScreenshotAsync(Long appId, String appUrl);
 
     /**
      * 获取应封装类
+     *
      * @param app
      * @return
      */
@@ -37,6 +41,7 @@ public interface AppService extends IService<App> {
 
     /**
      * 获取应用列表封装类
+     *
      * @param appList
      * @return
      */
@@ -44,6 +49,7 @@ public interface AppService extends IService<App> {
 
     /**
      * 构造应用查询条件
+     *
      * @param appQueryRequest
      * @return
      */
