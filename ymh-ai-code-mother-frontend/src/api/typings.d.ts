@@ -1,4 +1,20 @@
 declare namespace API {
+  type App = {
+    id?: number
+    appName?: string
+    cover?: string
+    initPrompt?: string
+    codeGenType?: string
+    deployKey?: string
+    deployedTime?: string
+    priority?: number
+    userId?: number
+    editTime?: string
+    createTime?: string
+    updateTime?: string
+    isDelete?: number
+  }
+
   type AppAddRequest = {
     initPrompt?: string
   }
@@ -140,6 +156,10 @@ declare namespace API {
 
   type DeleteRequest = {
     id?: number
+  }
+
+  type downloadAppCodeParams = {
+    appId: number
   }
 
   type getAppVOByIdByAdminParams = {

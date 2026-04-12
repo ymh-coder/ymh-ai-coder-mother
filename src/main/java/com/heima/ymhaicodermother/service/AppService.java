@@ -1,5 +1,6 @@
 package com.heima.ymhaicodermother.service;
 
+import com.heima.ymhaicodermother.model.dto.app.AppAddRequest;
 import com.heima.ymhaicodermother.model.dto.app.AppQueryRequest;
 import com.heima.ymhaicodermother.model.entity.User;
 import com.heima.ymhaicodermother.model.vo.AppVO;
@@ -16,6 +17,15 @@ import java.util.List;
  * @author <a href="https://github.com/ymh-coder">程序员ymh-coder</a>
  */
 public interface AppService extends IService<App> {
+
+    /**
+     * 创建应用
+     *
+     * @param appAddRequest 应用信息
+     * @param loginUser     登录用户
+     * @return 应用 ID
+     */
+    Long createApp(AppAddRequest appAddRequest, User loginUser);
 
     Flux<String> chatToGenCode(Long appId, String message, User loginUser);
 
