@@ -2,6 +2,8 @@ package com.heima.ymhaicodermother.ai;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.heima.ymhaicodermother.ai.guardrail.PromptSafetyInputGuardrail;
+import com.heima.ymhaicodermother.ai.guardrail.RetryOutputGuardrail;
 import com.heima.ymhaicodermother.ai.tools.*;
 import com.heima.ymhaicodermother.exception.BusinessException;
 import com.heima.ymhaicodermother.exception.ErrorCode;
@@ -79,6 +81,9 @@ public class AiCodeGenerateServiceFactory {
                         .hallucinatedToolNameStrategy(toolExecutionRequest -> ToolExecutionResultMessage.from(
                                 toolExecutionRequest, "Error: there is no tool called " + toolExecutionRequest.name()
                         ))
+                        .maxSequentialToolsInvocations(20)
+                        .inputGuardrails(new PromptSafetyInputGuardrail())
+//                        .outputGuardrails(new RetryOutputGuardrail())
                         .build();
             }
             // HTML 和多文件生成使用默认模型
@@ -89,6 +94,8 @@ public class AiCodeGenerateServiceFactory {
                         .chatModel(chatModel)
                         .streamingChatModel(openAiStreamingChatModel)
                         .chatMemory(chatMemory)
+                        .inputGuardrails(new PromptSafetyInputGuardrail())
+//                        .outputGuardrails(new RetryOutputGuardrail())
                         .build();
             }
             default -> throw new BusinessException(ErrorCode.SYSTEM_ERROR,
