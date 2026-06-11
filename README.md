@@ -4,16 +4,49 @@ AI 驱动的智能代码生成平台——输入自然语言描述，自动生�
 
 ## 技术栈
 
-| 层级 | 技术 |
-|------|------|
-| **后端框架** | Spring Boot 3.5 + Java 21 |
-| **AI 集成** | LangChain4j + DeepSeek / 通义千问 |
-| **数据库** | MySQL 8.0 + MyBatis-Plus |
-| **缓存/Session** | Redis |
-| **前端** | Vue 3 + TypeScript + Vite + Ant Design Vue |
-| **监控** | Prometheus + Grafana + Actuator |
-| **API 文档** | SpringDoc OpenAPI + Knife4j |
-| **构建工具** | Maven Wrapper |
+### 后端
+
+| 类别 | 技术 | 说明 |
+|------|------|------|
+| **核心框架** | Spring Boot 3.5 | 主框架，提供 Web、AOP、Actuator 等开箱即用的能力 |
+| **语言** | Java 21 | 利用虚拟线程、Record 等新特性 |
+| **AI 框架** | LangChain4j | Java 生态的 LLM 集成框架，提供 Chat Model、Tool、Guardrail、Streaming 等统一抽象 |
+| **AI 模型** | DeepSeek（chat / reasoner）+ 通义千问（qwen-turbo） | 双模型架构，chat 负责生成，reasoner 负责复杂推理，qwen-turbo 负责意图路由 |
+| **流式响应** | LangChain4j Reactor + SSE | 基于 Project Reactor 的 `Flux<String>` 实现 SSE 流式输出 |
+| **ORM** | MyBatis Flex + MyBatis Flex CodeGen | 轻量 ORM，支持链式查询和代码生成器 |
+| **连接池** | HikariCP | Spring Boot 默认高性能连接池 |
+| **数据库** | MySQL 8.0 | 关系型数据库，存储用户、应用、聊天历史 |
+| **缓存** | Redis + Caffeine + Redisson | Redis 负责 Session 和聊天记忆持久化；Caffeine 提供本地缓存加速；Redisson 提供分布式锁 |
+| **会话管理** | Spring Session + Redis | 分布式 Session 管理，支持 30 天免登录 |
+| **API 文档** | SpringDoc OpenAPI + Knife4j | 自动生成 Swagger 文档，Knife4j 提供增强 UI |
+| **监控** | Micrometer + Prometheus + Grafana | Micrometer 采集指标，Prometheus 拉取存储，Grafana 可视化 |
+| **截图** | Selenium + WebDriverManager | 自动化浏览器截图，WebDriverManager 自动管理 ChromeDriver 版本 |
+| **对象存储** | 腾讯云 COS | 截图文件云端存储 |
+| **工具库** | Lombok + Hutool | Lombok 减少样板代码，Hutool 提供通用工具方法 |
+| **构建** | Maven Wrapper | 无需预装 Maven，`mvnw` 自动下载匹配版本 |
+
+### 前端
+
+| 类别 | 技术 | 说明 |
+|------|------|------|
+| **核心框架** | Vue 3.5（Composition API） | 渐进式前端框架，`<script setup>` 语法 |
+| **语言** | TypeScript 5.8 | 类型安全，配合 Vue 3 获得完整的 IDE 提示 |
+| **构建工具** | Vite 7 | 极速 HMR 热更新和构建 |
+| **UI 组件库** | Ant Design Vue 4 | 企业级 UI 组件，提供表单、表格、布局等丰富组件 |
+| **状态管理** | Pinia 3 | Vue 官方推荐的状态管理库，轻量且 TypeScript 友好 |
+| **路由** | Vue Router 4 | SPA 路由管理 |
+| **HTTP 客户端** | Axios | 请求拦截、响应拦截统一处理 |
+| **代码渲染** | Markdown-it + highlight.js | AI 生成的 Markdown 代码块语法高亮渲染 |
+| **API 类型生成** | @umijs/openapi | 从后端 OpenAPI 文档自动生成 TypeScript 类型和请求函数 |
+| **代码质量** | ESLint 9 + Prettier 3 | 代码规范和格式化 |
+
+### 运维 & 基础设施
+
+| 类别 | 技术 | 说明 |
+|------|------|------|
+| **指标采集** | Prometheus | 定时拉取 Actuator 暴露的 `/actuator/prometheus` 端点 |
+| **可视化** | Grafana | 预置 JSON 面板配置，展示 AI 调用次数、成功率、响应时间等 |
+| **健康检查** | Spring Boot Actuator | 提供 `/health`、`/info`、`/prometheus` 等运维端点 |
 
 ## 项目结构
 
