@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ymh-ai-coder-mother-backend
+    name: ymh-ai-coder-app
   # mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,7 +22,7 @@ spring:
   profiles:
     active: local
 server:
-  port: 8123
+  port: 8125
   servlet:
     context-path: /api
     # cookie 30 天过期
@@ -40,13 +40,17 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-# 监控
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus
-  endpoint:
-    health:
-      show-details: always
+# Dubbo
+dubbo:
+  registry:
+    address: nacos://127.0.0.1:8848?username=nacos&password=nacos
+    register-mode: instance
+  protocol:
+    name: tri
+    port: 50053
+  consumer:
+    timeout: 120000
+  provider:
+    timeout: 120000
+
 
